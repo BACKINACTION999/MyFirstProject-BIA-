@@ -1,7 +1,6 @@
-<!DOCTYPE html>
 <html>
 	<head>
-		<title>THREE JS TEST</title>
+		<title>My first three.js app</title>
 		<style>
 			body { margin: 0; }
 			canvas { width: 100%; height: 100% }
@@ -10,55 +9,159 @@
 	<body>
 		<script src="lib/three.js"></script>
 		<script>
+			var scene = new THREE.Scene();
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+
 
 var keyboard = {};
 var player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
 
-			///SCENE
-			var scene = new THREE.Scene();
-			///CAMERA
-			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
-			///RENDERER
-			var renderer = new THREE.WebGLRenderer();
-				renderer.setSize( window.innerWidth, window.innerHeight );
-					document.body.appendChild( renderer.domElement );
-			///GEOMETRY
+
 			var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-				var material = new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true  } );
-					var cube = new THREE.Mesh( geometry, material );
-						scene.add( cube );
-						cube.position.x = 2;
-						cube.position.z = -7;
-
-			var geometry1 = new THREE.BoxGeometry( 1, 1, 1 );
-				var material1 = new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true } );
-					var cube1 = new THREE.Mesh( geometry1, material1 );
-						scene.add( cube1 );
-						cube1.position.x = -2;
-						cube1.position.z = -7;
-
-			var geometry2 = new THREE.BoxGeometry( 10, 0.5, 10 );
-				var material2 = new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true  } );
-					var cube2 = new THREE.Mesh( geometry2, material2 );
-						scene.add( cube2 );
-						cube2.position.x = 0;
-						cube2.position.y = -2;
-						cube2.position.z = -7;
+			var geometry1 = new THREE.BoxGeometry( 2, 2, 2 );
+			var geometryflat = new THREE.BoxGeometry( 20, 1, 20 );
 
 
-			///LIGHT
-			light1 = new THREE.PointLight( 0xff0040, 1, 50 );
-				scene.add( light1 );
-			///CAMERA POSITION
+			//var material = new THREE.MeshBasicMaterial( { 
+				//color: 0xffffff, wireframe: false
+				 //} );
+
+			var material = new THREE.MeshNormalMaterial( {
+				wireframe: false
+			} );
+
+			var material1 = new THREE.MeshNormalMaterial( {
+				wireframe: true
+			} );
+
+
+
+
+			
+
+
+
+			var cube = new THREE.Mesh( geometry, material );
+			scene.add( cube );
+			cube.position.x = 0;
+			cube.position.y = 0;
+			cube.position.z = 0;
+
+			var cube1 = new THREE.Mesh( geometry, material );
+			scene.add( cube1 );
+			cube1.position.x = 2;
+			cube.position.y = 0;
+			cube.position.z = 0;
+
+			var cube2 = new THREE.Mesh( geometry, material );
+			scene.add( cube2 );
+			cube2.position.x = -2;
+			cube.position.y = 0;
+			cube.position.z = 0;
+
+
+
+
+			var cube3 = new THREE.Mesh( geometry, material );
+			scene.add( cube3 );
+			cube3.position.x = 0;
+			cube3.position.y = 0;
+			cube3.position.z = -2;
+
+			var cube4 = new THREE.Mesh( geometry, material );
+			scene.add( cube4 );
+			cube4.position.x = 2;
+			cube4.position.y = 0;
+			cube4.position.z = -2;
+
+			var cube5 = new THREE.Mesh( geometry, material );
+			scene.add( cube5 );
+			cube5.position.x = -2;
+			cube5.position.y = 0;
+			cube5.position.z = -2;
+
+			var cube6 = new THREE.Mesh( geometry1, material );
+			scene.add( cube6 );
+			cube6.position.x = 4;
+			cube6.position.y = 0;
+			cube6.position.z = -5;
+
+			var cube8 = new THREE.Mesh( geometry1, material );
+			scene.add( cube8 );
+			cube8.position.x = 8;
+			cube8.position.y = 0;
+			cube8.position.z = -5;
+
+
+			var cube7 = new THREE.Mesh( geometryflat, material );
+			scene.add( cube7 );
+			cube7.position.x = 0;
+			cube7.position.y = -1.5;
+			cube7.position.z = -5;
+
+			var cube9 = new THREE.Mesh( geometry1, material );
+			scene.add( cube9 );
+			cube9.position.x = 4;
+			cube9.position.y = 4;
+			cube9.position.z = -5;
+
+			var cube10 = new THREE.Mesh( geometry, material );
+			scene.add( cube10 );
+			cube10.position.x = 8;
+			cube10.position.y = 4;
+			cube10.position.z = -5;
+
+			var cube11 = new THREE.Mesh( geometry1, material1 );
+			scene.add( cube11 );
+			cube11.position.x = 8;
+			cube11.position.y = 4;
+			cube11.position.z = -5;
+
+
+	
+
+
+
+
+
+
+			var light = new THREE.AmbientLight(0xffffff, 1);
+			scene.add(light);
+
+			var light = new THREE.PointLight( 0xff0000, 1, 100 );
+			light.position.set( 50, 50, 50 );
+			scene.add( light );
+
+
+
+
+			camera.position.x = 0;
+			camera.position.y = 2;
 			camera.position.z = 5;
-			///
-			var animate = function ()
-			{
+
+			var animate = function () {
 				requestAnimationFrame( animate );
-				cube.rotation.x += 0.05;
-				cube.rotation.y += 0.05;
-				cube1.rotation.x += 0.05;
-				cube1.rotation.y += 0.05;
+
+				cube.rotation.x += 0.01;
+				cube.rotation.y += 0.01;
+				cube1.rotation.x += 0.01;
+				cube1.rotation.y += 0.01;
+				cube2.rotation.x += 0.01;
+				cube2.rotation.y += 0.01;
+				cube3.rotation.x += 0.01;
+				cube3.rotation.y += 0.01;
+				cube4.rotation.x += 0.01;
+				cube4.rotation.y += 0.01;
+				cube5.rotation.x += 0.01;
+				cube5.rotation.y += 0.01;
+				cube10.rotation.x += 0.02;
+				cube10.rotation.y += 0.02;
+				cube11.rotation.x -= 0.02;
+				cube11.rotation.y -= 0.02;
 
 				if(keyboard[83]){ // W key
 		camera.position.x -= Math.sin(camera.rotation.y) * player.speed;
@@ -77,18 +180,13 @@ var player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
 		camera.position.z += -Math.cos(camera.rotation.y - Math.PI/2) * player.speed;
 	}
 	
-	if(keyboard[39]){ // left arrow key
-		camera.rotation.y -= player.turnSpeed;
-	}
-	if(keyboard[37]){ // right arrow key
-		camera.rotation.y += player.turnSpeed;
-	}
-
+	
 
 				renderer.render(scene, camera);
 			};
 
-function keyDown(event){
+
+			function keyDown(event){
 	keyboard[event.keyCode] = true;
 }
 
@@ -98,7 +196,7 @@ function keyUp(event){
 
 window.addEventListener('keydown', keyDown);
 window.addEventListener('keyup', keyUp);
-			///
+
 			animate();
 		</script>
 	</body>
