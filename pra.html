@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>THREE JS TEST</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="lib/three.js"></script>
+		<script>
+
+var keyboard = {};
+var player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
+
+			///SCENE
+			var scene = new THREE.Scene();
+			///CAMERA
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+			///RENDERER
+			var renderer = new THREE.WebGLRenderer();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+					document.body.appendChild( renderer.domElement );
+			///GEOMETRY
+			var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+				var material = new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true  } );
+					var cube = new THREE.Mesh( geometry, material );
+						scene.add( cube );
+						cube.position.x = 2;
+						cube.position.z = -7;
+
+			var geometry1 = new THREE.BoxGeometry( 1, 1, 1 );
+				var material1 = new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true } );
+					var cube1 = new THREE.Mesh( geometry1, material1 );
+						scene.add( cube1 );
+						cube1.position.x = -2;
+						cube1.position.z = -7;
+
+			var geometry2 = new THREE.BoxGeometry( 10, 0.5, 10 );
+				var material2 = new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true  } );
+					var cube2 = new THREE.Mesh( geometry2, material2 );
+						scene.add( cube2 );
+						cube2.position.x = 0;
+						cube2.position.y = -2;
+						cube2.position.z = -7;
+
+
+			///LIGHT
+			light1 = new THREE.PointLight( 0xff0040, 1, 50 );
+				scene.add( light1 );
+			///CAMERA POSITION
+			camera.position.z = 5;
+			///
+			var animate = function ()
+			{
+				requestAnimationFrame( animate );
+				cube.rotation.x += 0.05;
+				cube.rotation.y += 0.05;
+				cube1.rotation.x += 0.05;
+				cube1.rotation.y += 0.05;
+
+				if(keyboard[83]){ // W key
+		camera.position.x -= Math.sin(camera.rotation.y) * player.speed;
+		camera.position.z -= -Math.cos(camera.rotation.y) * player.speed;
+	}
+	if(keyboard[87]){ // S key
+		camera.position.x += Math.sin(camera.rotation.y) * player.speed;
+		camera.position.z += -Math.cos(camera.rotation.y) * player.speed;
+	}
+	if(keyboard[68]){ // A key
+		camera.position.x += Math.sin(camera.rotation.y + Math.PI/2) * player.speed;
+		camera.position.z += -Math.cos(camera.rotation.y + Math.PI/2) * player.speed;
+	}
+	if(keyboard[65]){ // D key
+		camera.position.x += Math.sin(camera.rotation.y - Math.PI/2) * player.speed;
+		camera.position.z += -Math.cos(camera.rotation.y - Math.PI/2) * player.speed;
+	}
+	
+	if(keyboard[39]){ // left arrow key
+		camera.rotation.y -= player.turnSpeed;
+	}
+	if(keyboard[37]){ // right arrow key
+		camera.rotation.y += player.turnSpeed;
+	}
+
+
+				renderer.render(scene, camera);
+			};
+
+function keyDown(event){
+	keyboard[event.keyCode] = true;
+}
+
+function keyUp(event){
+	keyboard[event.keyCode] = false;
+}
+
+window.addEventListener('keydown', keyDown);
+window.addEventListener('keyup', keyUp);
+			///
+			animate();
+		</script>
+	</body>
+</html>
